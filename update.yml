@@ -1,0 +1,56 @@
+name: Обновить AI Radar
+
+on:
+  schedule:
+    - cron: "17 3,9,15,21 * * *"   # 4 раза в день (UTC)
+  workflow_dispatch:               # плюс кнопка «Run workflow» вручную
+  push:
+    branches: [main]
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+concurrency:
+  group: airadar
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Собрать дашборд
+        env:
+          # необязательно: без ключа сводка всё равно собирается через бесплатную LLM
+          GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
+        run: python build.py
+
+      - name: Закоммитить свежие данные
+        run: |
+          git config user.name  "ai-radar-bot"
+          git config user.email "bot@users.noreply.github.com"
+          git add index.html index.json manifest.webmanifest sw.js icon-*.png icon.svg version.json
+          git diff --staged --quiet || git commit -m "data: обновление $(date -u +'%Y-%m-%d %H:%M UTC')"
+          git push
+
+      - name: Выложить на GitHub Pages
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: .
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
