@@ -39,7 +39,7 @@ SOURCES = [
     dict(key="tg_provod",  name="Провод",          url="https://t.me/s/provod",        color="#2aabee", lang="ru", cap=15, tg=True, ai_only=True),
     dict(key="tg_maltsev", name="Мальцев просто",  url="https://t.me/s/maltsevprosto", color="#3fb6e8", lang="ru", cap=15, tg=True),
     dict(key="tg_neyro",   name="Нейросети",       url="https://t.me/s/neyroseti_dr",  color="#5ac8fa", lang="ru", cap=15, tg=True),
-    dict(key="tg_gptnews", name="GPT News",        url="https://t.me/s/gpt_news",      color="#0088cc", lang="ru", cap=15, tg=True),
+    dict(key="tg_gptnews", name="GPT News",        url="https://t.me/s/gpt_news",      color="#0088cc", lang="ru", cap=15, tg=True, ai_only=True),
 ]
 
 UA = "Mozilla/5.0 (compatible; AINewsDashboard/1.0; +https://example.com)"
@@ -195,7 +195,7 @@ TG_POST_RE = re.compile(r'data-post="([^"]+)"')
 TG_TEXT_RE = re.compile(r'<div class="tgme_widget_message_text[^"]*"[^>]*>(.*?)</div>', re.S)
 TG_TIME_RE = re.compile(r'<time[^>]*datetime="([^"]+)"')
 AI_RE = re.compile(r"(?i)(\bии\b|\bai\b|нейро|нейрон|\bgpt|chatgpt|claude|gemini|openai|anthropic|llm|"
-                   r"промпт|prompt|deepseek|grok|copilot|midjourney|codex|агент|искусствен|машинн\w* обуч|qwen|mistral|sora|veo)")
+                   r"промпт|prompt|deepseek|grok|copilot|midjourney|codex|\bагент|скилл|искусствен|машинн\w* обуч|qwen|mistral|sora|veo)")
 
 
 def parse_tg(html_text: str, src: dict, per_feed: int = 15):
@@ -210,6 +210,9 @@ def parse_tg(html_text: str, src: dict, per_feed: int = 15):
         lines = [l for l in lines if l]
         if not lines:
             continue
+        lines[0] = re.sub(r"^(?:[^\w«]*)(?:привет|всем привет|доброе утро)[^!.]*[!.]\s*", "", lines[0], flags=re.I) or lines[0]
+        if not lines[0]:
+            lines = lines[1:] or [""]
         full = " ".join(lines)
         if src.get("ai_only") and not AI_RE.search(full):
             continue
