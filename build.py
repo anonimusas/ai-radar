@@ -343,6 +343,45 @@ def _translate_batch(texts):
     return res
 
 
+def _llm_translate_chunk(lines):
+    """Запасной переводчик — бесплатная LLM Pollinations (без ключа)."""
+    numbered = "\n".join(f"{n}. {t}" for n, t in enumerate(lines, 1))
+    prompt = ("Переведи на русский язык каждую строку ниже. Сохрани нумерацию, по одной строке "
+              "на пункт. Названия компаний, продуктов и моделей не переводи. Выведи только перевод, "
+              "без пояснений.\n\n" + numbered)
+    try:
+        req = urllib.request.Request("https://text.pollinations.ai/" + urllib.parse.quote(prompt),
+                                     headers={"User-Agent": UA, "Accept": "text/plain"})
+        with urllib.request.urlopen(req, timeout=120) as r:
+            txt = r.read().decode("utf-8", "replace")
+    except Exception as e:  # noqa: BLE001
+        print(f"  перевод (LLM): {type(e).__name__}: {e}", file=sys.stderr)
+        return {}
+    got = {}
+    for m in re.finditer(r"(?m)^\s*(\d+)[.)]\s*(.+?)\s*$", txt):
+        n = int(m.group(1))
+        if 1 <= n <= len(lines):
+            got[lines[n - 1]] = m.group(2).strip(" *")
+    return got
+
+
+def _llm_translate(texts, max_chunks=6):
+    res, chunk, size, done = {}, [], 0, 0
+    chunks = []
+    for t in texts:
+        t1 = t.replace("\n", " ")
+        if chunk and (size + len(t1) > 1500 or len(chunk) >= 25):
+            chunks.append(chunk); chunk, size = [], 0
+        chunk.append(t1); size += len(t1) + 1
+    if chunk:
+        chunks.append(chunk)
+    for i, ch in enumerate(chunks[:max_chunks]):  # лимит ~1 запрос в 30 сек; остальное — в следующий запуск
+        if i:
+            time.sleep(31)
+        res.update(_llm_translate_chunk(ch))
+    return res
+
+
 def translate_items(items, out_dir):
     """Переводит заголовки и описания нерусских источников. Готовые переводы
     хранятся в translations.json, поэтому каждый запуск переводит только новое."""
@@ -368,6 +407,11 @@ def translate_items(items, out_dir):
     if todo:
         print(f"  перевод: {len(todo)} новых строк", file=sys.stderr)
         got = _translate_batch(list(todo.values()))
+        left = [t for t in todo.values() if not got.get(t.replace("\n", " "))]
+        if left:
+            print(f"  перевод: {len(left)} строк через запасную LLM", file=sys.stderr)
+            got.update(_llm_translate(left))
+            time.sleep(31)  # дальше сводка тоже идёт через Pollinations
         for k, txt in todo.items():
             ru = got.get(txt.replace("\n", " "), "")
             if ru and ru_ratio(ru) >= 0.3:
