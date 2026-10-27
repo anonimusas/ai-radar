@@ -48,7 +48,6 @@ SOURCES = [
     # ── популярные англоязычные (переводятся автоматически) ──
     dict(key="decoder", name="The Decoder",     url="https://the-decoder.com/feed/",                   color="#e4405f", lang="en", cap=15),
     dict(key="tldr",    name="TLDR AI",         url="https://tldr.tech/api/rss/ai",                    color="#f2c94c", lang="en", cap=10),
-    dict(key="vb",      name="VentureBeat AI",  url="https://venturebeat.com/category/ai/feed/",       color="#c2185b", lang="en", cap=12),
     dict(key="r_claude",name="r/ClaudeAI",      url="https://www.reddit.com/r/ClaudeAI/top/.rss?t=day", color="#d97757", lang="en", cap=10),
     dict(key="r_openai",name="r/OpenAI",        url="https://www.reddit.com/r/OpenAI/top/.rss?t=day",   color="#ff5700", lang="en", cap=10),
     # ── релизы инструментов (заголовок = номер версии, не переводим) ──
