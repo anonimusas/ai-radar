@@ -12,12 +12,12 @@ Fetching feeds...
   ok  Mistral AI          12 items
   ok  arXiv cs.AI         12 items
   ok  r/LocalLLaMA        15 items
-  ok  Hacker News AI      15 items
+  ERR Hacker News AI     HTTPError: HTTP Error 502: Bad Gateway
   ok  NVIDIA              12 items
   ok  Ars Technica AI     12 items
   ok  MarkTechPost        10 items
   ok  BAIR Berkeley        4 items
-  ok  Провод               7 items
+  ok  Провод               8 items
   ok  Мальцев просто      15 items
   ok  Нейросети           15 items
   ok  GPT News             4 items
@@ -28,13 +28,18 @@ Fetching feeds...
   ok  gonzo-обзоры ML      5 items
   ok  The Decoder         10 items
   ok  TLDR AI             10 items
-  ERR r/ClaudeAI         HTTPError: HTTP Error 429: Too Many Requests
-  ok  r/OpenAI            10 items
+  ok  r/ClaudeAI          10 items
+  ERR r/OpenAI           HTTPError: HTTP Error 429: Too Many Requests
   ok  Ollama релизы        4 items
   ok  vLLM релизы          4 items
   ok  ComfyUI релизы       4 items
-Итого: 337 материалов (свежих 337)
+Итого: 324 материалов (свежих 324)
 Перевод на русский...
+  перевод: 61 новых строк
+  перевод: готово 61/61
 Сводка (русская)...
-  digest ok: бесплатная LLM · Pollinations (ru=0.90)
+  pollinations: пунктов=12, обрезано, повтор
+  pollinations: пунктов=12, обрезано, повтор
+  pollinations: пунктов=12, обрезано, повтор
+  digest: fallback
 Готово: /home/runner/work/ai-radar/ai-radar/index.html
