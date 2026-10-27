@@ -289,26 +289,51 @@ def _tr_key(text: str) -> str:
     return hashlib.sha1(text.encode("utf-8")).hexdigest()[:16]
 
 
-def _google_tr(text: str) -> str:
-    """Бесплатный эндпоинт Google Translate (без ключа). Пустая строка = не получилось."""
-    url = ("https://translate.googleapis.com/translate_a/single?client=gtx&sl=auto&tl=ru&dt=t&q="
-           + urllib.parse.quote(text))
-    for attempt in range(3):
+def _google_call(text: str) -> str:
+    """Один запрос к бесплатному Google Translate (без ключа). POST — чтобы влезал длинный текст."""
+    body = urllib.parse.urlencode({"q": text}).encode()
+    url = "https://translate.googleapis.com/translate_a/single?client=gtx&sl=auto&tl=ru&dt=t"
+    for attempt in range(4):
         try:
-            req = urllib.request.Request(url, headers={"User-Agent": UA})
-            with urllib.request.urlopen(req, timeout=20) as r:
+            req = urllib.request.Request(url, data=body, headers={
+                "User-Agent": UA, "Content-Type": "application/x-www-form-urlencoded;charset=utf-8"})
+            with urllib.request.urlopen(req, timeout=30) as r:
                 data = json.loads(r.read().decode("utf-8"))
-            res = "".join(part[0] for part in data[0] if part and part[0])
-            return res.strip()
-        except Exception:  # noqa: BLE001
-            time.sleep(2 * (attempt + 1))
+            return "".join(part[0] for part in data[0] if part and part[0])
+        except Exception as e:  # noqa: BLE001
+            print(f"  перевод: {type(e).__name__}: {e}, повтор", file=sys.stderr)
+            time.sleep(4 * (attempt + 1))
     return ""
+
+
+def _translate_batch(texts):
+    """Переводит список строк пачками по ~3500 символов: строки склеиваются через \\n,
+    поэтому на 50 заголовков уходит 1–2 запроса вместо 50 (Google не режет по лимиту)."""
+    res = {}
+    chunk, size = [], 0
+    chunks = []
+    for t in texts:
+        t1 = t.replace("\n", " ")
+        if chunk and size + len(t1) > 3500:
+            chunks.append(chunk); chunk, size = [], 0
+        chunk.append(t1); size += len(t1) + 1
+    if chunk:
+        chunks.append(chunk)
+    for ch in chunks:
+        out = _google_call("\n".join(ch)).split("\n")
+        if len(out) == len(ch):
+            res.update(zip(ch, (o.strip() for o in out)))
+        else:  # Google склеил/разбил строки — переводим эту пачку по одной
+            for t in ch:
+                res[t] = _google_call(t).strip()
+                time.sleep(0.5)
+        time.sleep(1)
+    return res
 
 
 def translate_items(items, out_dir):
     """Переводит заголовки и описания нерусских источников. Готовые переводы
     хранятся в translations.json, поэтому каждый запуск переводит только новое."""
-    from concurrent.futures import ThreadPoolExecutor
     path = os.path.join(out_dir, TR_CACHE)
     try:
         with open(path, encoding="utf-8") as f:
@@ -330,13 +355,13 @@ def translate_items(items, out_dir):
 
     if todo:
         print(f"  перевод: {len(todo)} новых строк", file=sys.stderr)
-        with ThreadPoolExecutor(max_workers=6) as ex:
-            for k, ru in zip(todo, ex.map(_google_tr, todo.values())):
-                if ru and ru_ratio(ru) >= 0.3:
-                    cache[k] = ru
+        got = _translate_batch(list(todo.values()))
+        for k, txt in todo.items():
+            ru = got.get(txt.replace("\n", " "), "")
+            if ru and ru_ratio(ru) >= 0.3:
+                cache[k] = ru
         print(f"  перевод: готово {sum(1 for k in todo if k in cache)}/{len(todo)}", file=sys.stderr)
 
-    used = {}
     for it in items:
         for fld in ("title", "desc"):
             txt = it.get(fld) or ""
@@ -344,11 +369,13 @@ def translate_items(items, out_dir):
             if k and k in cache:
                 it[fld + "_orig"] = txt
                 it[fld] = cache[k]
-                used[k] = cache[k]
 
-    # храним только переводы текущих материалов, чтобы файл не рос бесконечно
+    # кеш не чистим по текущей ленте (иначе перевод теряется, если источник раз не ответил),
+    # а просто ограничиваем размер: новые записи в конце, старые отрезаются
+    if len(cache) > 4000:
+        cache = dict(list(cache.items())[-4000:])
     with open(path, "w", encoding="utf-8") as f:
-        json.dump(used, f, ensure_ascii=False, indent=0)
+        json.dump(cache, f, ensure_ascii=False, indent=0)
 
 
 # ---------------------------------------------------------------- LLM digest
@@ -362,7 +389,7 @@ DIGEST_PROMPT = (
     "до 100 символов: что произошло и почему это важно.\n"
     "3. Только текст и ** для жирного. Никаких # и списков с цифрами.\n"
     "4. Никаких вступлений вроде «вот дайджест» и выводов.\n"
-    "5. Названия компаний и моделей оставляй как есть.\n"
+    "5. Названия компаний и моделей оставляй как есть, но короткий заголовок пункта пиши по-русски.\n"
     "6. Не выдумывай факты, которых нет в заголовках.\n"
     "7. Весь текст — по-русски.\n\n"
     "Заголовки:\n"
@@ -380,7 +407,7 @@ def ru_ratio(txt: str) -> float:
 
 
 def _digest_prompt(items, n=16):
-    listing = "\n".join(f"- {i.get('title_orig', i['title'])}" for i in items[:n])
+    listing = "\n".join(f"- {i['title']}" for i in items[:n])
     return DIGEST_PROMPT + listing
 
 
