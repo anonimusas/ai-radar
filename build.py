@@ -141,7 +141,8 @@ def fetch(url: str, timeout: int = 25, retries: int = 3) -> bytes:
             return raw
         except Exception as e:  # noqa: BLE001
             last = e
-            time.sleep(1.5 * (attempt + 1))
+            # 429 = «слишком часто»: Reddit и VentureBeat отпускают после паузы подлиннее
+            time.sleep((10 if "429" in str(e) else 1.5) * (attempt + 1))
     raise last
 
 
@@ -270,6 +271,8 @@ def dedupe(items):
 def build_items(per_feed=25, max_age_days=14, errors=None):
     items = []
     for src in SOURCES:
+        if "reddit.com" in src["url"]:
+            time.sleep(4)  # Reddit режет частые запросы с одного адреса
         try:
             raw = fetch(src["url"])
             cap = min(per_feed, src.get("cap", per_feed))
