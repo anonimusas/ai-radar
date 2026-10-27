@@ -1,0 +1,40 @@
+Fetching feeds...
+  ok  TechCrunch AI       20 items
+  ok  Hugging Face        15 items
+  ok  GitHub Trending     14 items
+  ok  Habr AI             20 items
+  ok  OpenAI              15 items
+  ok  Google AI           15 items
+  ok  DeepMind            15 items
+  ok  The Verge AI        10 items
+  ok  MIT Tech Review     10 items
+  ok  Simon Willison      15 items
+  ok  Mistral AI          12 items
+  ok  arXiv cs.AI         12 items
+  ok  r/LocalLLaMA        15 items
+  ERR Hacker News AI     HTTPError: HTTP Error 502: Bad Gateway
+  ok  NVIDIA              12 items
+  ok  Ars Technica AI     12 items
+  ok  MarkTechPost        10 items
+  ok  BAIR Berkeley        4 items
+  ok  Провод               7 items
+  ok  Мальцев просто      15 items
+  ok  Нейросети           15 items
+  ok  GPT News             4 items
+Итого: 226 материалов (свежих 226)
+Перевод на русский...
+  перевод: 19 новых строк
+  перевод: HTTPError: HTTP Error 429: Too Many Requests
+  перевод: HTTPError: HTTP Error 429: Too Many Requests
+  перевод: HTTPError: HTTP Error 429: Too Many Requests
+  перевод: HTTPError: HTTP Error 429: Too Many Requests
+  перевод: HTTPError: HTTP Error 429: Too Many Requests
+  перевод: HTTPError: HTTP Error 429: Too Many Requests
+  перевод: HTTPError: HTTP Error 429: Too Many Requests
+  перевод: HTTPError: HTTP Error 429: Too Many Requests
+  перевод: HTTPError: HTTP Error 429: Too Many Requests
+  перевод: Google не отвечает, остальное переведётся в следующий запуск
+  перевод: готово 0/19
+Сводка (русская)...
+  digest ok: бесплатная LLM · Pollinations (ru=0.85)
+Готово: /home/runner/work/ai-radar/ai-radar/index.html
