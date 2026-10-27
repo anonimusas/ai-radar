@@ -1003,12 +1003,14 @@ def make_icons(out):
     svg = """<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
 <defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
 <stop offset="0" stop-color="#7c5cff"/><stop offset="1" stop-color="#22d3ee"/></linearGradient></defs>
-<rect width="512" height="512" rx="112" fill="#0b0d12"/>
-<rect x="26" y="26" width="460" height="460" rx="92" fill="url(#g)"/>
-<text x="256" y="330" font-family="Helvetica,Arial" font-size="240" font-weight="bold"
- text-anchor="middle" fill="#0b0d12">◈</text></svg>"""
+<rect width="512" height="512" fill="#0b0d12"/>
+<rect x="113" y="113" width="286" height="286" rx="78" fill="url(#g)"/>
+<path d="M256 170 L342 256 L256 342 L170 256 Z" fill="none" stroke="#fff" stroke-width="16" stroke-linejoin="miter"/>
+<path d="M256 220 L292 256 L256 292 L220 256 Z" fill="#fff"/></svg>"""
     with open(os.path.join(out, "icon.svg"), "w", encoding="utf-8") as f:
         f.write(svg)
+    if all(os.path.exists(os.path.join(out, n)) for n in ("icon-192.png", "icon-512.png")):
+        return  # готовые иконки лежат в репозитории — не перезаписываем
     try:
         from PIL import Image, ImageDraw
         for size, name in ((192, "icon-192.png"), (512, "icon-512.png")):
