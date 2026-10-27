@@ -30,25 +30,14 @@ Fetching feeds...
   ok  TLDR AI             10 items
   ERR VentureBeat AI     HTTPError: HTTP Error 429: Too Many Requests
   ok  r/ClaudeAI          10 items
-  ERR r/OpenAI           HTTPError: HTTP Error 429: Too Many Requests
+  ok  r/OpenAI            10 items
   ok  Ollama релизы        4 items
   ok  vLLM релизы          4 items
   ok  ComfyUI релизы       4 items
-Итого: 337 материалов (свежих 337)
+Итого: 347 материалов (свежих 347)
 Перевод на русский...
-  перевод: 82 новых строк
-  перевод: HTTPError: HTTP Error 429: Too Many Requests
-  перевод: HTTPError: HTTP Error 429: Too Many Requests
-  перевод: HTTPError: HTTP Error 429: Too Many Requests
-  перевод: HTTPError: HTTP Error 429: Too Many Requests
-  перевод: HTTPError: HTTP Error 429: Too Many Requests
-  перевод: HTTPError: HTTP Error 429: Too Many Requests
-  перевод: HTTPError: HTTP Error 429: Too Many Requests
-  перевод: HTTPError: HTTP Error 429: Too Many Requests
-  перевод: HTTPError: HTTP Error 429: Too Many Requests
-  перевод: Google не отвечает, остальное переведётся в следующий запуск
-  перевод: 82 строк через запасную LLM
-  перевод: готово 34/82
+  перевод: 67 новых строк
+  перевод: готово 67/67
 Сводка (русская)...
-  digest ok: бесплатная LLM · Pollinations (ru=0.96)
+  digest ok: бесплатная LLM · Pollinations (ru=0.90)
 Готово: /home/runner/work/ai-radar/ai-radar/index.html
