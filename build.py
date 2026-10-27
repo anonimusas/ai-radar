@@ -18,7 +18,7 @@ SOURCES = [
     # key        название                  url                                                   цвет      язык  cap
     dict(key="tc",     name="TechCrunch AI",   url="https://techcrunch.com/category/artificial-intelligence/feed/",       color="#0aa06e", lang="en", cap=20),
     dict(key="hf",     name="Hugging Face",    url="https://huggingface.co/blog/feed.xml",                                color="#f5a623", lang="en", cap=15),
-    dict(key="gh",     name="GitHub Trending", url="https://mshibanami.github.io/GitHubTrendingRSS/daily/all.xml",         color="#8957e5", lang="en", cap=15),
+    dict(key="gh",     name="GitHub Trending", url="https://mshibanami.github.io/GitHubTrendingRSS/daily/all.xml",         color="#8957e5", lang="en", cap=15, keep_title=True),
     dict(key="habr",   name="Habr AI",         url="https://habr.com/ru/rss/hubs/artificial_intelligence/",               color="#5aa2e0", lang="ru", cap=20),
     dict(key="openai", name="OpenAI",          url="https://openai.com/news/rss.xml",                                     color="#10a37f", lang="en", cap=15),
     dict(key="gai",    name="Google AI",       url="https://blog.google/technology/ai/rss/",                              color="#4285f4", lang="en", cap=15),
@@ -40,6 +40,21 @@ SOURCES = [
     dict(key="tg_maltsev", name="Мальцев просто",  url="https://t.me/s/maltsevprosto", color="#3fb6e8", lang="ru", cap=15, tg=True),
     dict(key="tg_neyro",   name="Нейросети",       url="https://t.me/s/neyroseti_dr",  color="#5ac8fa", lang="ru", cap=15, tg=True),
     dict(key="tg_gptnews", name="GPT News",        url="https://t.me/s/gpt_news",      color="#0088cc", lang="ru", cap=15, tg=True, ai_only=True),
+    dict(key="tg_sioloh",  name="Сиолошная",       url="https://t.me/s/seeallochnaya", color="#7b9cff", lang="ru", cap=12, tg=True),
+    dict(key="tg_ainewz",  name="эйай ньюз",       url="https://t.me/s/ai_newz",       color="#4fc3f7", lang="ru", cap=12, tg=True),
+    dict(key="tg_datasec", name="Data Secrets",    url="https://t.me/s/data_secrets",  color="#29b6f6", lang="ru", cap=15, tg=True),
+    dict(key="tg_denis",   name="Denis Sexy IT",   url="https://t.me/s/denissexy",     color="#81d4fa", lang="ru", cap=12, tg=True),
+    dict(key="tg_gonzo",   name="gonzo-обзоры ML", url="https://t.me/s/gonzo_ML",      color="#64b5f6", lang="ru", cap=8,  tg=True, days=30),
+    # ── популярные англоязычные (переводятся автоматически) ──
+    dict(key="decoder", name="The Decoder",     url="https://the-decoder.com/feed/",                   color="#e4405f", lang="en", cap=15),
+    dict(key="tldr",    name="TLDR AI",         url="https://tldr.tech/api/rss/ai",                    color="#f2c94c", lang="en", cap=10),
+    dict(key="vb",      name="VentureBeat AI",  url="https://venturebeat.com/category/ai/feed/",       color="#c2185b", lang="en", cap=12),
+    dict(key="r_claude",name="r/ClaudeAI",      url="https://www.reddit.com/r/ClaudeAI/top/.rss?t=day", color="#d97757", lang="en", cap=10),
+    dict(key="r_openai",name="r/OpenAI",        url="https://www.reddit.com/r/OpenAI/top/.rss?t=day",   color="#ff5700", lang="en", cap=10),
+    # ── релизы инструментов (заголовок = номер версии, не переводим) ──
+    dict(key="rel_ollama", name="Ollama релизы",  url="https://github.com/ollama/ollama/releases.atom",          color="#9e9e9e", lang="en", cap=4, days=30, keep_title=True),
+    dict(key="rel_vllm",   name="vLLM релизы",    url="https://github.com/vllm-project/vllm/releases.atom",     color="#30a2ff", lang="en", cap=4, days=30, keep_title=True),
+    dict(key="rel_comfy",  name="ComfyUI релизы", url="https://github.com/comfyanonymous/ComfyUI/releases.atom", color="#b388ff", lang="en", cap=4, days=30, keep_title=True),
 ]
 
 UA = "Mozilla/5.0 (compatible; AINewsDashboard/1.0; +https://example.com)"
@@ -392,17 +407,19 @@ def translate_items(items, out_dir):
     except Exception:  # noqa: BLE001
         cache = {}
 
-    todo = {}
+    keep_title = {x["key"] for x in SOURCES if x.get("keep_title")}  # имя репо / номер версии
+    titles, descs = {}, {}
     for it in items:
         if it["lang"] == "ru":
             continue
-        fields = ["desc"] if it["src"] == "gh" else ["title", "desc"]  # у GitHub заголовок = имя репо
+        fields = ["desc"] if it["src"] in keep_title else ["title", "desc"]
         for fld in fields:
             txt = it.get(fld) or ""
             if txt and ru_ratio(txt) < 0.3:
                 k = _tr_key(txt)
                 if k not in cache:
-                    todo[k] = txt
+                    (titles if fld == "title" else descs)[k] = txt
+    todo = {**titles, **descs}  # сначала заголовки: если лимит кончится, описания доделаются потом
 
     if todo:
         print(f"  перевод: {len(todo)} новых строк", file=sys.stderr)
@@ -414,7 +431,7 @@ def translate_items(items, out_dir):
             time.sleep(31)  # дальше сводка тоже идёт через Pollinations
         for k, txt in todo.items():
             ru = got.get(txt.replace("\n", " "), "")
-            if ru and ru_ratio(ru) >= 0.3:
+            if ru and len(ru) >= len(txt) * 0.3:
                 cache[k] = ru
         print(f"  перевод: готово {sum(1 for k in todo if k in cache)}/{len(todo)}", file=sys.stderr)
 
