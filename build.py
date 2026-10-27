@@ -35,6 +35,11 @@ SOURCES = [
     dict(key="ars",    name="Ars Technica AI", url="https://arstechnica.com/ai/feed/",                                    color="#ff4e00", lang="en", cap=12),
     dict(key="mtp",    name="MarkTechPost",    url="https://www.marktechpost.com/feed/",                                  color="#00b4d8", lang="en", cap=12),
     dict(key="bair",   name="BAIR Berkeley",   url="https://bair.berkeley.edu/blog/feed.xml",                             color="#003262", lang="en", cap=4, days=400),
+    # ── Telegram-каналы (читаются через публичную веб-версию t.me/s/…) ──
+    dict(key="tg_provod",  name="Провод",          url="https://t.me/s/provod",        color="#2aabee", lang="ru", cap=15, tg=True, ai_only=True),
+    dict(key="tg_maltsev", name="Мальцев просто",  url="https://t.me/s/maltsevprosto", color="#3fb6e8", lang="ru", cap=15, tg=True),
+    dict(key="tg_neyro",   name="Нейросети",       url="https://t.me/s/neyroseti_dr",  color="#5ac8fa", lang="ru", cap=15, tg=True),
+    dict(key="tg_gptnews", name="GPT News",        url="https://t.me/s/gpt_news",      color="#0088cc", lang="ru", cap=15, tg=True),
 ]
 
 UA = "Mozilla/5.0 (compatible; AINewsDashboard/1.0; +https://example.com)"
@@ -184,6 +189,50 @@ def parse_feed(xml_bytes: bytes, src: dict, per_feed: int = 25):
     return out
 
 
+# ---------------------------------------------------------------- Telegram
+TG_MSG_RE = re.compile(r'<div class="tgme_widget_message_wrap.*?(?=<div class="tgme_widget_message_wrap|\Z)', re.S)
+TG_POST_RE = re.compile(r'data-post="([^"]+)"')
+TG_TEXT_RE = re.compile(r'<div class="tgme_widget_message_text[^"]*"[^>]*>(.*?)</div>', re.S)
+TG_TIME_RE = re.compile(r'<time[^>]*datetime="([^"]+)"')
+AI_RE = re.compile(r"(?i)(\bии\b|\bai\b|нейро|нейрон|\bgpt|chatgpt|claude|gemini|openai|anthropic|llm|"
+                   r"промпт|prompt|deepseek|grok|copilot|midjourney|codex|агент|искусствен|машинн\w* обуч|qwen|mistral|sora|veo)")
+
+
+def parse_tg(html_text: str, src: dict, per_feed: int = 15):
+    out = []
+    for block in TG_MSG_RE.findall(html_text):
+        pm, tm = TG_POST_RE.search(block), TG_TEXT_RE.search(block)
+        if not pm or not tm:
+            continue  # пост без текста (только фото/видео)
+        raw = re.sub(r"(?i)<br\s*/?>", "\n", tm.group(1))
+        raw = re.sub(r"<[^>]+>", "", raw)
+        lines = [WS_RE.sub(" ", l).strip() for l in html.unescape(raw).split("\n")]
+        lines = [l for l in lines if l]
+        if not lines:
+            continue
+        full = " ".join(lines)
+        if src.get("ai_only") and not AI_RE.search(full):
+            continue
+        # заголовок — первая строка (или первое предложение), остальное — описание
+        title = lines[0]
+        rest = " ".join(lines[1:])
+        if len(title) > 160:
+            m = re.match(r"(.{30,160}?[.!?…])\s", title + " ")
+            cut = m.group(1) if m else title[:160].rsplit(" ", 1)[0] + "…"
+            rest = (title[len(cut):].strip() + " " + rest).strip()
+            title = cut
+        title = title.strip(" —-:")
+        dm = TG_TIME_RE.search(block)
+        link = "https://t.me/" + pm.group(1)
+        out.append({
+            "id": link, "title": strip_html(title, 200), "link": link, "src": src["key"],
+            "ts": parse_date(dm.group(1)) if dm else 0, "desc": strip_html(rest, 320),
+            "lang": "ru", "cats": [],
+        })
+    out.sort(key=lambda x: x["ts"], reverse=True)  # в веб-версии новые посты внизу
+    return out[:per_feed]
+
+
 def dedupe(items):
     seen, res = {}, []
     for it in items:
@@ -200,7 +249,11 @@ def build_items(per_feed=25, max_age_days=14, errors=None):
     for src in SOURCES:
         try:
             raw = fetch(src["url"])
-            got = parse_feed(raw, src, min(per_feed, src.get("cap", per_feed)))
+            cap = min(per_feed, src.get("cap", per_feed))
+            if src.get("tg"):
+                got = parse_tg(raw.decode("utf-8", "replace"), src, cap)
+            else:
+                got = parse_feed(raw, src, cap)
             print(f"  ok  {src['name']:<18} {len(got):>3} items", file=sys.stderr)
             items += got
         except Exception as e:
