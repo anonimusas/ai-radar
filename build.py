@@ -219,6 +219,77 @@ def build_items(per_feed=25, max_age_days=14, errors=None):
     return dated, undated
 
 
+# ---------------------------------------------------------------- перевод на русский
+TR_CACHE = "translations.json"
+
+
+def _tr_key(text: str) -> str:
+    import hashlib
+    return hashlib.sha1(text.encode("utf-8")).hexdigest()[:16]
+
+
+def _google_tr(text: str) -> str:
+    """Бесплатный эндпоинт Google Translate (без ключа). Пустая строка = не получилось."""
+    url = ("https://translate.googleapis.com/translate_a/single?client=gtx&sl=auto&tl=ru&dt=t&q="
+           + urllib.parse.quote(text))
+    for attempt in range(3):
+        try:
+            req = urllib.request.Request(url, headers={"User-Agent": UA})
+            with urllib.request.urlopen(req, timeout=20) as r:
+                data = json.loads(r.read().decode("utf-8"))
+            res = "".join(part[0] for part in data[0] if part and part[0])
+            return res.strip()
+        except Exception:  # noqa: BLE001
+            time.sleep(2 * (attempt + 1))
+    return ""
+
+
+def translate_items(items, out_dir):
+    """Переводит заголовки и описания нерусских источников. Готовые переводы
+    хранятся в translations.json, поэтому каждый запуск переводит только новое."""
+    from concurrent.futures import ThreadPoolExecutor
+    path = os.path.join(out_dir, TR_CACHE)
+    try:
+        with open(path, encoding="utf-8") as f:
+            cache = json.load(f)
+    except Exception:  # noqa: BLE001
+        cache = {}
+
+    todo = {}
+    for it in items:
+        if it["lang"] == "ru":
+            continue
+        fields = ["desc"] if it["src"] == "gh" else ["title", "desc"]  # у GitHub заголовок = имя репо
+        for fld in fields:
+            txt = it.get(fld) or ""
+            if txt and ru_ratio(txt) < 0.3:
+                k = _tr_key(txt)
+                if k not in cache:
+                    todo[k] = txt
+
+    if todo:
+        print(f"  перевод: {len(todo)} новых строк", file=sys.stderr)
+        with ThreadPoolExecutor(max_workers=6) as ex:
+            for k, ru in zip(todo, ex.map(_google_tr, todo.values())):
+                if ru and ru_ratio(ru) >= 0.3:
+                    cache[k] = ru
+        print(f"  перевод: готово {sum(1 for k in todo if k in cache)}/{len(todo)}", file=sys.stderr)
+
+    used = {}
+    for it in items:
+        for fld in ("title", "desc"):
+            txt = it.get(fld) or ""
+            k = _tr_key(txt) if txt else None
+            if k and k in cache:
+                it[fld + "_orig"] = txt
+                it[fld] = cache[k]
+                used[k] = cache[k]
+
+    # храним только переводы текущих материалов, чтобы файл не рос бесконечно
+    with open(path, "w", encoding="utf-8") as f:
+        json.dump(used, f, ensure_ascii=False, indent=0)
+
+
 # ---------------------------------------------------------------- LLM digest
 DIGEST_PROMPT = (
     "ОТВЕЧАЙ ТОЛЬКО НА РУССКОМ ЯЗЫКЕ. Перевод заголовков на английский недопустим.\n\n"
@@ -248,7 +319,7 @@ def ru_ratio(txt: str) -> float:
 
 
 def _digest_prompt(items, n=16):
-    listing = "\n".join(f"- {i['title']}" for i in items[:n])
+    listing = "\n".join(f"- {i.get('title_orig', i['title'])}" for i in items[:n])
     return DIGEST_PROMPT + listing
 
 
@@ -592,7 +663,7 @@ function visible(){
     else if(filter === 'unread'){ if(readSet.has(it.id)) return false; }
     else if(filter === 'ru'){ if(it.lang !== 'ru') return false; }
     else if(filter !== 'all'){ if(it.src !== filter) return false; }
-    if(q && !(it.title.toLowerCase().includes(q) || (it.desc||'').toLowerCase().includes(q))) return false;
+    if(q && ![it.title, it.desc, it.title_orig, it.desc_orig].some(t => (t||'').toLowerCase().includes(q))) return false;
     return true;
   });
 }
@@ -826,6 +897,7 @@ def main():
     ap.add_argument("--max-age-days", type=int, default=14)
     ap.add_argument("--no-llm", action="store_true", help="без русской сводки (быстрая сборка)")
     ap.add_argument("--llm", action="store_true", help="устаревший флаг, сводка включена по умолчанию")
+    ap.add_argument("--no-translate", action="store_true", help="не переводить материалы на русский")
     args = ap.parse_args()
 
     print("Fetching feeds...", file=sys.stderr)
@@ -835,6 +907,10 @@ def main():
     if not items:
         print("Ничего не собрано — проверь сеть.", file=sys.stderr)
         return 1
+
+    if not args.no_translate:
+        print("Перевод на русский...", file=sys.stderr)
+        translate_items(items, args.out)
 
     digest, digest_label = "", ""
     if not args.no_llm:
