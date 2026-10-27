@@ -290,13 +290,12 @@ def _tr_key(text: str) -> str:
 
 
 def _google_call(text: str) -> str:
-    """Один запрос к бесплатному Google Translate (без ключа). POST — чтобы влезал длинный текст."""
-    body = urllib.parse.urlencode({"q": text}).encode()
-    url = "https://translate.googleapis.com/translate_a/single?client=gtx&sl=auto&tl=ru&dt=t"
+    """Один запрос к бесплатному Google Translate (без ключа)."""
+    url = ("https://translate.googleapis.com/translate_a/single?client=gtx&sl=auto&tl=ru&dt=t&q="
+           + urllib.parse.quote(text))
     for attempt in range(4):
         try:
-            req = urllib.request.Request(url, data=body, headers={
-                "User-Agent": UA, "Content-Type": "application/x-www-form-urlencoded;charset=utf-8"})
+            req = urllib.request.Request(url, headers={"User-Agent": UA})
             with urllib.request.urlopen(req, timeout=30) as r:
                 data = json.loads(r.read().decode("utf-8"))
             return "".join(part[0] for part in data[0] if part and part[0])
@@ -307,14 +306,14 @@ def _google_call(text: str) -> str:
 
 
 def _translate_batch(texts):
-    """Переводит список строк пачками по ~3500 символов: строки склеиваются через \\n,
+    """Переводит список строк пачками по ~1500 символов: строки склеиваются через \\n,
     поэтому на 50 заголовков уходит 1–2 запроса вместо 50 (Google не режет по лимиту)."""
     res = {}
     chunk, size = [], 0
     chunks = []
     for t in texts:
         t1 = t.replace("\n", " ")
-        if chunk and size + len(t1) > 3500:
+        if chunk and size + len(t1) > 1500:
             chunks.append(chunk); chunk, size = [], 0
         chunk.append(t1); size += len(t1) + 1
     if chunk:
@@ -987,6 +986,16 @@ def main():
     ap.add_argument("--llm", action="store_true", help="устаревший флаг, сводка включена по умолчанию")
     ap.add_argument("--no-translate", action="store_true", help="не переводить материалы на русский")
     args = ap.parse_args()
+
+    # дублируем лог в build.log — его видно прямо в репозитории, если что-то сломалось
+    class _Tee:
+        def __init__(self, *s): self.s = s
+        def write(self, x):
+            for f in self.s: f.write(x)
+        def flush(self):
+            for f in self.s: f.flush()
+    _log = open(os.path.join(args.out, "build.log"), "w", encoding="utf-8")
+    sys.stderr = _Tee(sys.__stderr__, _log)
 
     print("Fetching feeds...", file=sys.stderr)
     dated, undated = build_items(args.per_feed, args.max_age_days)
