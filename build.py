@@ -289,19 +289,29 @@ def _tr_key(text: str) -> str:
     return hashlib.sha1(text.encode("utf-8")).hexdigest()[:16]
 
 
+_TR_FAILS = [0]  # подряд неудачных запросов; после 3 перевод в этом запуске отключается
+
+
 def _google_call(text: str) -> str:
     """Один запрос к бесплатному Google Translate (без ключа)."""
+    if _TR_FAILS[0] >= 3:
+        return ""
     url = ("https://translate.googleapis.com/translate_a/single?client=gtx&sl=auto&tl=ru&dt=t&q="
            + urllib.parse.quote(text))
-    for attempt in range(4):
+    for attempt in range(3):
         try:
             req = urllib.request.Request(url, headers={"User-Agent": UA})
-            with urllib.request.urlopen(req, timeout=30) as r:
+            with urllib.request.urlopen(req, timeout=20) as r:
                 data = json.loads(r.read().decode("utf-8"))
+            _TR_FAILS[0] = 0
             return "".join(part[0] for part in data[0] if part and part[0])
         except Exception as e:  # noqa: BLE001
-            print(f"  перевод: {type(e).__name__}: {e}, повтор", file=sys.stderr)
-            time.sleep(4 * (attempt + 1))
+            print(f"  перевод: {type(e).__name__}: {e}", file=sys.stderr)
+            if attempt < 2:
+                time.sleep(3 * (attempt + 1))
+    _TR_FAILS[0] += 1
+    if _TR_FAILS[0] >= 3:
+        print("  перевод: Google не отвечает, остальное переведётся в следующий запуск", file=sys.stderr)
     return ""
 
 
@@ -319,7 +329,10 @@ def _translate_batch(texts):
     if chunk:
         chunks.append(chunk)
     for ch in chunks:
-        out = _google_call("\n".join(ch)).split("\n")
+        joined = _google_call("\n".join(ch))
+        if not joined:
+            continue
+        out = joined.split("\n")
         if len(out) == len(ch):
             res.update(zip(ch, (o.strip() for o in out)))
         else:  # Google склеил/разбил строки — переводим эту пачку по одной
@@ -955,8 +968,13 @@ MANIFEST = {
     "orientation": "portrait",
     "lang": "ru",
     "icons": [
-        {"src": "icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any maskable"},
-        {"src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable"},
+        # maskable — иконка на рабочем столе и первая (системная) заставка Android
+        {"src": "icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "maskable"},
+        {"src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable"},
+        # any — вторая заставка Chrome; плашка нарисована мельче, чтобы совпадала по размеру
+        # с системной заставкой и значок не «прыгал» при запуске
+        {"src": "splash-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any"},
+        {"src": "splash-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any"},
     ],
 }
 
