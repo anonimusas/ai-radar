@@ -208,6 +208,11 @@ def parse_tg(html_text: str, src: dict, per_feed: int = 15):
         raw = re.sub(r"<[^>]+>", "", raw)
         lines = [WS_RE.sub(" ", l).strip() for l in html.unescape(raw).split("\n")]
         lines = [l for l in lines if l]
+        # подпись канала в конце поста («● GPT News | ChatGPT BOT», «⚡️ Провод») — убираем
+        sig = src["name"].split()[0].lower()
+        while len(lines) > 1 and len(lines[-1]) < 60 and (
+                sig in lines[-1].lower() or "|" in lines[-1] or "@" in lines[-1] or "t.me/" in lines[-1]):
+            lines.pop()
         if not lines:
             continue
         lines[0] = re.sub(r"^(?:[^\w«]*)(?:привет|всем привет|доброе утро)[^!.]*[!.]\s*", "", lines[0], flags=re.I) or lines[0]
