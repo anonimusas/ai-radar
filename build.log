@@ -25,33 +25,18 @@ Fetching feeds...
   ok  эйай ньюз           12 items
   ok  Data Secrets        15 items
   ok  Denis Sexy IT       12 items
-  ok  gonzo-обзоры ML      5 items
+  ok  gonzo-обзоры ML      4 items
   ok  The Decoder         10 items
   ok  TLDR AI             10 items
-  ERR r/ClaudeAI         HTTPError: HTTP Error 429: Too Many Requests
-  ok  r/OpenAI            10 items
+  ok  r/ClaudeAI          10 items
+  ERR r/OpenAI           HTTPError: HTTP Error 429: Too Many Requests
   ok  Ollama релизы        4 items
   ok  vLLM релизы          4 items
   ok  ComfyUI релизы       4 items
-Итого: 339 материалов (свежих 339)
+Итого: 337 материалов (свежих 337)
 Перевод на русский...
-  перевод: 127 новых строк
-  перевод: HTTPError: HTTP Error 429: Too Many Requests
-  перевод: HTTPError: HTTP Error 429: Too Many Requests
-  перевод: HTTPError: HTTP Error 429: Too Many Requests
-  перевод: HTTPError: HTTP Error 429: Too Many Requests
-  перевод: HTTPError: HTTP Error 429: Too Many Requests
-  перевод: HTTPError: HTTP Error 429: Too Many Requests
-  перевод: HTTPError: HTTP Error 429: Too Many Requests
-  перевод: HTTPError: HTTP Error 429: Too Many Requests
-  перевод: HTTPError: HTTP Error 429: Too Many Requests
-  перевод: Google не отвечает, остальное переведётся в следующий запуск
-  перевод: 127 строк через запасную LLM
-  перевод (LLM): HTTPError: HTTP Error 400: Bad Request
-  перевод: готово 43/127
+  перевод: 104 новых строк
+  перевод: готово 104/104
 Сводка (русская)...
-  pollinations: пунктов=2, обрезано, повтор
-  pollinations: пунктов=2, обрезано, повтор
-  pollinations: пунктов=2, обрезано, повтор
-  digest: fallback
+  digest ok: бесплатная LLM · Pollinations (ru=0.90)
 Готово: /home/runner/work/ai-radar/ai-radar/index.html
