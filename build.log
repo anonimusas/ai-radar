@@ -1,7 +1,7 @@
 Fetching feeds...
   ok  TechCrunch AI       20 items
   ok  Hugging Face        15 items
-  ok  GitHub Trending     15 items
+  ok  GitHub Trending     14 items
   ok  Habr AI             20 items
   ok  OpenAI              15 items
   ok  Google AI           15 items
@@ -10,17 +10,17 @@ Fetching feeds...
   ok  MIT Tech Review     10 items
   ok  Simon Willison      15 items
   ok  Mistral AI          12 items
-  ok  arXiv cs.AI         12 items
+  ok  arXiv cs.AI          0 items
   ok  r/LocalLLaMA        15 items
   ok  Hacker News AI      15 items
   ok  NVIDIA              12 items
   ok  Ars Technica AI     12 items
   ok  MarkTechPost        10 items
   ok  BAIR Berkeley        4 items
-  ok  Провод               6 items
+  ok  Провод               3 items
   ok  Мальцев просто      15 items
   ok  Нейросети           15 items
-  ok  GPT News             8 items
+  ok  GPT News            10 items
   ok  Сиолошная           12 items
   ok  эйай ньюз           12 items
   ok  Data Secrets        15 items
@@ -33,10 +33,10 @@ Fetching feeds...
   ok  Ollama релизы        4 items
   ok  vLLM релизы          4 items
   ok  ComfyUI релизы       4 items
-Итого: 337 материалов (свежих 337)
+Итого: 324 материалов (свежих 324)
 Перевод на русский...
-  перевод: 104 новых строк
-  перевод: готово 104/104
+  перевод: 52 новых строк
+  перевод: готово 52/52
 Сводка (русская)...
-  digest ok: бесплатная LLM · Pollinations (ru=0.90)
+  digest ok: бесплатная LLM · Pollinations (ru=0.89)
 Готово: /home/runner/work/ai-radar/ai-radar/index.html
