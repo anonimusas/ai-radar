@@ -1,7 +1,7 @@
 Fetching feeds...
   ok  TechCrunch AI       20 items
   ok  Hugging Face        15 items
-  ok  GitHub Trending     14 items
+  ok  GitHub Trending     15 items
   ok  Habr AI             20 items
   ok  OpenAI              15 items
   ok  Google AI           15 items
@@ -17,10 +17,10 @@ Fetching feeds...
   ok  Ars Technica AI     12 items
   ok  MarkTechPost        10 items
   ok  BAIR Berkeley        4 items
-  ok  Провод               3 items
+  ok  Провод               6 items
   ok  Мальцев просто      15 items
   ok  Нейросети           15 items
-  ok  GPT News            10 items
+  ok  GPT News             9 items
   ok  Сиолошная           12 items
   ok  эйай ньюз           12 items
   ok  Data Secrets        15 items
@@ -33,22 +33,10 @@ Fetching feeds...
   ok  Ollama релизы        4 items
   ok  vLLM релизы          4 items
   ok  ComfyUI релизы       4 items
-Итого: 310 материалов (свежих 310)
+Итого: 313 материалов (свежих 313)
 Перевод на русский...
-  перевод: 36 новых строк
-  перевод: HTTPError: HTTP Error 429: Too Many Requests
-  перевод: HTTPError: HTTP Error 429: Too Many Requests
-  перевод: HTTPError: HTTP Error 429: Too Many Requests
-  перевод: HTTPError: HTTP Error 429: Too Many Requests
-  перевод: HTTPError: HTTP Error 429: Too Many Requests
-  перевод: HTTPError: HTTP Error 429: Too Many Requests
-  перевод: HTTPError: HTTP Error 429: Too Many Requests
-  перевод: HTTPError: HTTP Error 429: Too Many Requests
-  перевод: HTTPError: HTTP Error 429: Too Many Requests
-  перевод: Google не отвечает, остальное переведётся в следующий запуск
-  перевод: 36 строк через запасную LLM
-  перевод: готово 21/36
+  перевод: 63 новых строк
+  перевод: готово 63/63
 Сводка (русская)...
-  pollinations: HTTPError: HTTP Error 404: Not Found
-  digest ok: бесплатная LLM · Pollinations (ru=0.80)
+  digest ok: бесплатная LLM · Pollinations (ru=0.89)
 Готово: /home/runner/work/ai-radar/ai-radar/index.html
