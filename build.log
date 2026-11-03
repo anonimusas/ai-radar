@@ -10,7 +10,7 @@ Fetching feeds...
   ok  MIT Tech Review     10 items
   ok  Simon Willison      15 items
   ok  Mistral AI          12 items
-  ok  arXiv cs.AI          0 items
+  ok  arXiv cs.AI         12 items
   ok  r/LocalLLaMA        15 items
   ok  Hacker News AI      15 items
   ok  NVIDIA              12 items
@@ -20,36 +20,23 @@ Fetching feeds...
   ok  Провод               3 items
   ok  Мальцев просто      15 items
   ok  Нейросети           15 items
-  ok  GPT News            11 items
+  ok  GPT News            12 items
   ok  Сиолошная           12 items
   ok  эйай ньюз           12 items
-  ok  Data Secrets        11 items
+  ok  Data Secrets        10 items
   ok  Denis Sexy IT       12 items
   ok  gonzo-обзоры ML      5 items
   ok  The Decoder         10 items
   ok  TLDR AI             10 items
   ok  r/ClaudeAI          10 items
-  ERR r/OpenAI           HTTPError: HTTP Error 429: Too Many Requests
+  ok  r/OpenAI            10 items
   ok  Ollama релизы        4 items
   ok  vLLM релизы          4 items
   ok  ComfyUI релизы       4 items
-Итого: 323 материалов (свежих 323)
+Итого: 343 материалов (свежих 343)
 Перевод на русский...
-  перевод: 100 новых строк
-  перевод: HTTPError: HTTP Error 429: Too Many Requests
-  перевод: HTTPError: HTTP Error 429: Too Many Requests
-  перевод: HTTPError: HTTP Error 429: Too Many Requests
-  перевод: HTTPError: HTTP Error 429: Too Many Requests
-  перевод: HTTPError: HTTP Error 429: Too Many Requests
-  перевод: HTTPError: HTTP Error 429: Too Many Requests
-  перевод: HTTPError: HTTP Error 429: Too Many Requests
-  перевод: HTTPError: HTTP Error 429: Too Many Requests
-  перевод: HTTPError: HTTP Error 429: Too Many Requests
-  перевод: Google не отвечает, остальное переведётся в следующий запуск
-  перевод: 100 строк через запасную LLM
-  перевод (LLM): HTTPError: HTTP Error 400: Bad Request
-  перевод (LLM): HTTPError: HTTP Error 400: Bad Request
-  перевод: готово 36/100
+  перевод: 188 новых строк
+  перевод: готово 188/188
 Сводка (русская)...
-  digest ok: бесплатная LLM · Pollinations (ru=0.91)
+  digest ok: бесплатная LLM · Pollinations (ru=0.89)
 Готово: /home/runner/work/ai-radar/ai-radar/index.html
