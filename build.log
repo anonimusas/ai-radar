@@ -17,10 +17,10 @@ Fetching feeds...
   ok  Ars Technica AI     12 items
   ok  MarkTechPost        10 items
   ok  BAIR Berkeley        4 items
-  ok  Провод               5 items
+  ok  Провод               7 items
   ok  Мальцев просто      15 items
   ok  Нейросети           15 items
-  ok  GPT News            11 items
+  ok  GPT News            10 items
   ok  Сиолошная           12 items
   ok  эйай ньюз           12 items
   ok  Data Secrets         9 items
@@ -33,9 +33,9 @@ Fetching feeds...
   ok  Ollama релизы        4 items
   ok  vLLM релизы          4 items
   ok  ComfyUI релизы       4 items
-Итого: 306 материалов (свежих 306)
+Итого: 305 материалов (свежих 305)
 Перевод на русский...
-  перевод: 131 новых строк
+  перевод: 156 новых строк
   перевод: HTTPError: HTTP Error 429: Too Many Requests
   перевод: HTTPError: HTTP Error 429: Too Many Requests
   перевод: HTTPError: HTTP Error 429: Too Many Requests
@@ -46,15 +46,9 @@ Fetching feeds...
   перевод: HTTPError: HTTP Error 429: Too Many Requests
   перевод: HTTPError: HTTP Error 429: Too Many Requests
   перевод: Google не отвечает, остальное переведётся в следующий запуск
-  перевод: 131 строк через запасную LLM
+  перевод: 156 строк через запасную LLM
   перевод (LLM): HTTPError: HTTP Error 400: Bad Request
-  перевод (LLM): HTTPError: HTTP Error 400: Bad Request
-  перевод (LLM): HTTPError: HTTP Error 400: Bad Request
-  перевод (LLM): HTTPError: HTTP Error 404: Not Found
-  перевод: готово 18/131
+  перевод: готово 50/156
 Сводка (русская)...
-  pollinations: HTTPError: HTTP Error 400: Bad Request
-  pollinations: HTTPError: HTTP Error 400: Bad Request
-  pollinations: HTTPError: HTTP Error 400: Bad Request
-  digest: fallback
+  digest ok: бесплатная LLM · Pollinations (ru=0.86)
 Готово: /home/runner/work/ai-radar/ai-radar/index.html
