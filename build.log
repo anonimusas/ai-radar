@@ -1,7 +1,7 @@
 Fetching feeds...
   ok  TechCrunch AI       20 items
   ok  Hugging Face        15 items
-  ok  GitHub Trending     13 items
+  ok  GitHub Trending     15 items
   ok  Habr AI             20 items
   ok  OpenAI              15 items
   ok  Google AI           15 items
@@ -10,20 +10,20 @@ Fetching feeds...
   ok  MIT Tech Review     10 items
   ok  Simon Willison      15 items
   ok  Mistral AI          12 items
-  ok  arXiv cs.AI          0 items
+  ok  arXiv cs.AI         12 items
   ok  r/LocalLLaMA        15 items
   ERR Hacker News AI     HTTPError: HTTP Error 502: Bad Gateway
   ok  NVIDIA              12 items
   ok  Ars Technica AI     12 items
   ok  MarkTechPost        10 items
   ok  BAIR Berkeley        4 items
-  ok  Провод               7 items
+  ok  Провод               5 items
   ok  Мальцев просто      15 items
   ok  Нейросети           15 items
-  ok  GPT News            10 items
+  ok  GPT News             9 items
   ok  Сиолошная           12 items
   ok  эйай ньюз           12 items
-  ok  Data Secrets         9 items
+  ok  Data Secrets        10 items
   ok  Denis Sexy IT       12 items
   ok  gonzo-обзоры ML      7 items
   ok  The Decoder         10 items
@@ -33,9 +33,9 @@ Fetching feeds...
   ok  Ollama релизы        4 items
   ok  vLLM релизы          4 items
   ok  ComfyUI релизы       4 items
-Итого: 305 материалов (свежих 305)
+Итого: 315 материалов (свежих 315)
 Перевод на русский...
-  перевод: 156 новых строк
+  перевод: 184 новых строк
   перевод: HTTPError: HTTP Error 429: Too Many Requests
   перевод: HTTPError: HTTP Error 429: Too Many Requests
   перевод: HTTPError: HTTP Error 429: Too Many Requests
@@ -46,9 +46,10 @@ Fetching feeds...
   перевод: HTTPError: HTTP Error 429: Too Many Requests
   перевод: HTTPError: HTTP Error 429: Too Many Requests
   перевод: Google не отвечает, остальное переведётся в следующий запуск
-  перевод: 156 строк через запасную LLM
+  перевод: 184 строк через запасную LLM
   перевод (LLM): HTTPError: HTTP Error 400: Bad Request
-  перевод: готово 50/156
+  перевод (LLM): HTTPError: HTTP Error 400: Bad Request
+  перевод: готово 42/184
 Сводка (русская)...
-  digest ok: бесплатная LLM · Pollinations (ru=0.86)
+  digest ok: бесплатная LLM · Pollinations (ru=0.83)
 Готово: /home/runner/work/ai-radar/ai-radar/index.html
