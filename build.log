@@ -12,18 +12,18 @@ Fetching feeds...
   ok  Mistral AI          12 items
   ok  arXiv cs.AI         12 items
   ok  r/LocalLLaMA        15 items
-  ERR Hacker News AI     HTTPError: HTTP Error 502: Bad Gateway
+  ok  Hacker News AI      15 items
   ok  NVIDIA              12 items
   ok  Ars Technica AI     12 items
   ok  MarkTechPost        10 items
   ok  BAIR Berkeley        4 items
-  ok  Провод               7 items
+  ok  Провод               6 items
   ok  Мальцев просто      15 items
   ok  Нейросети           15 items
-  ok  GPT News             7 items
+  ok  GPT News             8 items
   ok  Сиолошная           12 items
   ok  эйай ньюз           12 items
-  ok  Data Secrets        13 items
+  ok  Data Secrets        14 items
   ok  Denis Sexy IT       12 items
   ok  gonzo-обзоры ML      7 items
   ok  The Decoder         10 items
@@ -33,9 +33,9 @@ Fetching feeds...
   ok  Ollama релизы        4 items
   ok  vLLM релизы          4 items
   ok  ComfyUI релизы       4 items
-Итого: 319 материалов (свежих 319)
+Итого: 336 материалов (свежих 336)
 Перевод на русский...
-  перевод: 109 новых строк
+  перевод: 167 новых строк
   перевод: HTTPError: HTTP Error 429: Too Many Requests
   перевод: HTTPError: HTTP Error 429: Too Many Requests
   перевод: HTTPError: HTTP Error 429: Too Many Requests
@@ -46,11 +46,10 @@ Fetching feeds...
   перевод: HTTPError: HTTP Error 429: Too Many Requests
   перевод: HTTPError: HTTP Error 429: Too Many Requests
   перевод: Google не отвечает, остальное переведётся в следующий запуск
-  перевод: 109 строк через запасную LLM
+  перевод: 167 строк через запасную LLM
   перевод (LLM): HTTPError: HTTP Error 400: Bad Request
   перевод (LLM): HTTPError: HTTP Error 400: Bad Request
-  перевод (LLM): HTTPError: HTTP Error 400: Bad Request
-  перевод: готово 24/109
+  перевод: готово 36/167
 Сводка (русская)...
   pollinations: HTTPError: HTTP Error 400: Bad Request
   pollinations: HTTPError: HTTP Error 400: Bad Request
