@@ -17,15 +17,15 @@ Fetching feeds...
   ok  Ars Technica AI     12 items
   ok  MarkTechPost        10 items
   ok  BAIR Berkeley        4 items
-  ok  Провод               5 items
+  ok  Провод               4 items
   ok  Мальцев просто      15 items
   ok  Нейросети           15 items
-  ok  GPT News             9 items
+  ok  GPT News            10 items
   ok  Сиолошная           12 items
   ok  эйай ньюз           12 items
   ok  Data Secrets        15 items
   ok  Denis Sexy IT       12 items
-  ok  gonzo-обзоры ML      7 items
+  ok  gonzo-обзоры ML      4 items
   ok  The Decoder         10 items
   ok  TLDR AI             10 items
   ok  r/ClaudeAI          10 items
@@ -33,13 +33,25 @@ Fetching feeds...
   ok  Ollama релизы        4 items
   ok  vLLM релизы          4 items
   ok  ComfyUI релизы       4 items
-Итого: 325 материалов (свежих 325)
+Итого: 320 материалов (свежих 320)
 Перевод на русский...
-  перевод: 155 новых строк
-  перевод: готово 155/155
+  перевод: 62 новых строк
+  перевод: HTTPError: HTTP Error 429: Too Many Requests
+  перевод: HTTPError: HTTP Error 429: Too Many Requests
+  перевод: HTTPError: HTTP Error 429: Too Many Requests
+  перевод: HTTPError: HTTP Error 429: Too Many Requests
+  перевод: HTTPError: HTTP Error 429: Too Many Requests
+  перевод: HTTPError: HTTP Error 429: Too Many Requests
+  перевод: HTTPError: HTTP Error 429: Too Many Requests
+  перевод: HTTPError: HTTP Error 429: Too Many Requests
+  перевод: HTTPError: HTTP Error 429: Too Many Requests
+  перевод: Google не отвечает, остальное переведётся в следующий запуск
+  перевод: 62 строк через запасную LLM
+  перевод (LLM): HTTPError: HTTP Error 400: Bad Request
+  перевод: готово 16/62
 Сводка (русская)...
-  pollinations: слишком коротко; пунктов=1, обрезано, повтор
-  pollinations: слишком коротко; пунктов=1, обрезано, повтор
-  pollinations: слишком коротко; пунктов=1, обрезано, повтор
+  pollinations: HTTPError: HTTP Error 400: Bad Request
+  pollinations: HTTPError: HTTP Error 400: Bad Request
+  pollinations: HTTPError: HTTP Error 400: Bad Request
   digest: fallback
 Готово: /home/runner/work/ai-radar/ai-radar/index.html
