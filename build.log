@@ -33,10 +33,26 @@ Fetching feeds...
   ok  Ollama релизы        4 items
   ok  vLLM релизы          4 items
   ok  ComfyUI релизы       4 items
-Итого: 321 материалов (свежих 321)
+Итого: 323 материалов (свежих 323)
 Перевод на русский...
-  перевод: 68 новых строк
-  перевод: готово 68/68
+  перевод: 55 новых строк
+  перевод: HTTPError: HTTP Error 429: Too Many Requests
+  перевод: HTTPError: HTTP Error 429: Too Many Requests
+  перевод: HTTPError: HTTP Error 429: Too Many Requests
+  перевод: HTTPError: HTTP Error 429: Too Many Requests
+  перевод: HTTPError: HTTP Error 429: Too Many Requests
+  перевод: HTTPError: HTTP Error 429: Too Many Requests
+  перевод: HTTPError: HTTP Error 429: Too Many Requests
+  перевод: HTTPError: HTTP Error 429: Too Many Requests
+  перевод: HTTPError: HTTP Error 429: Too Many Requests
+  перевод: Google не отвечает, остальное переведётся в следующий запуск
+  перевод: 55 строк через запасную LLM
+  перевод (LLM): HTTPError: HTTP Error 400: Bad Request
+  перевод (LLM): HTTPError: HTTP Error 400: Bad Request
+  перевод: готово 30/55
 Сводка (русская)...
-  digest ok: бесплатная LLM · Pollinations (ru=0.86)
+  pollinations: пунктов=5, обрезано, повтор
+  pollinations: пунктов=5, обрезано, повтор
+  pollinations: пунктов=5, обрезано, повтор
+  digest: fallback
 Готово: /home/runner/work/ai-radar/ai-radar/index.html
