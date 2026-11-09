@@ -17,10 +17,10 @@ Fetching feeds...
   ok  Ars Technica AI     12 items
   ok  MarkTechPost        10 items
   ok  BAIR Berkeley        4 items
-  ok  Провод               2 items
+  ok  Провод               4 items
   ok  Мальцев просто      15 items
   ok  Нейросети           15 items
-  ok  GPT News            10 items
+  ok  GPT News             9 items
   ok  Сиолошная           12 items
   ok  эйай ньюз           12 items
   ok  Data Secrets        15 items
@@ -28,14 +28,14 @@ Fetching feeds...
   ok  gonzo-обзоры ML      4 items
   ok  The Decoder         10 items
   ok  TLDR AI             10 items
-  ok  r/ClaudeAI          10 items
-  ERR r/OpenAI           HTTPError: HTTP Error 429: Too Many Requests
+  ERR r/ClaudeAI         HTTPError: HTTP Error 429: Too Many Requests
+  ok  r/OpenAI            10 items
   ok  Ollama релизы        4 items
   ok  vLLM релизы          4 items
   ok  ComfyUI релизы       4 items
 Итого: 321 материалов (свежих 321)
 Перевод на русский...
-  перевод: 68 новых строк
+  перевод: 151 новых строк
   перевод: HTTPError: HTTP Error 429: Too Many Requests
   перевод: HTTPError: HTTP Error 429: Too Many Requests
   перевод: HTTPError: HTTP Error 429: Too Many Requests
@@ -46,8 +46,12 @@ Fetching feeds...
   перевод: HTTPError: HTTP Error 429: Too Many Requests
   перевод: HTTPError: HTTP Error 429: Too Many Requests
   перевод: Google не отвечает, остальное переведётся в следующий запуск
-  перевод: 68 строк через запасную LLM
-  перевод: готово 35/68
+  перевод: 151 строк через запасную LLM
+  перевод (LLM): HTTPError: HTTP Error 400: Bad Request
+  перевод (LLM): HTTPError: HTTP Error 400: Bad Request
+  перевод (LLM): HTTPError: HTTP Error 400: Bad Request
+  перевод (LLM): HTTPError: HTTP Error 400: Bad Request
+  перевод: готово 25/151
 Сводка (русская)...
   pollinations: HTTPError: HTTP Error 400: Bad Request
   pollinations: HTTPError: HTTP Error 400: Bad Request
