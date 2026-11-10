@@ -17,7 +17,7 @@ Fetching feeds...
   ok  Ars Technica AI     12 items
   ok  MarkTechPost        10 items
   ok  BAIR Berkeley        4 items
-  ok  Провод               9 items
+  ok  Провод               7 items
   ok  Мальцев просто      15 items
   ok  Нейросети           15 items
   ok  GPT News             9 items
@@ -33,13 +33,10 @@ Fetching feeds...
   ok  Ollama релизы        4 items
   ok  vLLM релизы          4 items
   ok  ComfyUI релизы       4 items
-Итого: 320 материалов (свежих 320)
+Итого: 325 материалов (свежих 325)
 Перевод на русский...
-  перевод: 172 новых строк
-  перевод: готово 172/172
+  перевод: 139 новых строк
+  перевод: готово 139/139
 Сводка (русская)...
-  pollinations: HTTPError: HTTP Error 400: Bad Request
-  pollinations: HTTPError: HTTP Error 400: Bad Request
-  pollinations: HTTPError: HTTP Error 400: Bad Request
-  digest: fallback
+  digest ok: бесплатная LLM · Pollinations (ru=0.89)
 Готово: /home/runner/work/ai-radar/ai-radar/index.html
