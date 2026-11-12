@@ -12,15 +12,15 @@ Fetching feeds...
   ok  Mistral AI          12 items
   ok  arXiv cs.AI          0 items
   ok  r/LocalLLaMA        15 items
-  ERR Hacker News AI     HTTPError: HTTP Error 502: Bad Gateway
+  ok  Hacker News AI      15 items
   ok  NVIDIA              12 items
   ok  Ars Technica AI     12 items
   ok  MarkTechPost        10 items
   ok  BAIR Berkeley        4 items
-  ok  Провод               3 items
+  ok  Провод               7 items
   ok  Мальцев просто      15 items
   ok  Нейросети           15 items
-  ok  GPT News             6 items
+  ok  GPT News             5 items
   ok  Сиолошная           12 items
   ok  эйай ньюз           12 items
   ok  Data Secrets        15 items
@@ -33,21 +33,13 @@ Fetching feeds...
   ok  Ollama релизы        4 items
   ok  vLLM релизы          4 items
   ok  ComfyUI релизы       4 items
-Итого: 304 материалов (свежих 304)
+Итого: 325 материалов (свежих 325)
 Перевод на русский...
-  перевод: 67 новых строк
-  перевод: HTTPError: HTTP Error 429: Too Many Requests
-  перевод: HTTPError: HTTP Error 429: Too Many Requests
-  перевод: HTTPError: HTTP Error 429: Too Many Requests
-  перевод: HTTPError: HTTP Error 429: Too Many Requests
-  перевод: HTTPError: HTTP Error 429: Too Many Requests
-  перевод: HTTPError: HTTP Error 429: Too Many Requests
-  перевод: HTTPError: HTTP Error 429: Too Many Requests
-  перевод: HTTPError: HTTP Error 429: Too Many Requests
-  перевод: HTTPError: HTTP Error 429: Too Many Requests
-  перевод: Google не отвечает, остальное переведётся в следующий запуск
-  перевод: 67 строк через запасную LLM
-  перевод: готово 30/67
+  перевод: 142 новых строк
+  перевод: готово 142/142
 Сводка (русская)...
-  digest ok: бесплатная LLM · Pollinations (ru=0.88)
+  pollinations: HTTPError: HTTP Error 400: Bad Request
+  pollinations: HTTPError: HTTP Error 400: Bad Request
+  pollinations: HTTPError: HTTP Error 400: Bad Request
+  digest: fallback
 Готово: /home/runner/work/ai-radar/ai-radar/index.html
