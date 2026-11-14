@@ -28,15 +28,15 @@ Fetching feeds...
   ok  gonzo-обзоры ML      5 items
   ok  The Decoder         10 items
   ok  TLDR AI             10 items
-  ERR r/ClaudeAI         HTTPError: HTTP Error 429: Too Many Requests
-  ok  r/OpenAI            10 items
+  ok  r/ClaudeAI          10 items
+  ERR r/OpenAI           HTTPError: HTTP Error 429: Too Many Requests
   ok  Ollama релизы        4 items
   ok  vLLM релизы          4 items
   ok  ComfyUI релизы       4 items
 Итого: 324 материалов (свежих 324)
 Перевод на русский...
-  перевод: 42 новых строк
-  перевод: готово 42/42
+  перевод: 23 новых строк
+  перевод: готово 23/23
 Сводка (русская)...
   pollinations: HTTPError: HTTP Error 400: Bad Request
   pollinations: HTTPError: HTTP Error 400: Bad Request
