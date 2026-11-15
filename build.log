@@ -1,7 +1,7 @@
 Fetching feeds...
   ok  TechCrunch AI       20 items
   ok  Hugging Face        15 items
-  ok  GitHub Trending     12 items
+  ok  GitHub Trending     15 items
   ok  Habr AI             20 items
   ok  OpenAI              15 items
   ok  Google AI           15 items
@@ -10,7 +10,7 @@ Fetching feeds...
   ok  MIT Tech Review     10 items
   ok  Simon Willison      15 items
   ok  Mistral AI          12 items
-  ok  arXiv cs.AI         12 items
+  ok  arXiv cs.AI          0 items
   ok  r/LocalLLaMA        15 items
   ERR Hacker News AI     HTTPError: HTTP Error 502: Bad Gateway
   ok  NVIDIA              12 items
@@ -33,10 +33,10 @@ Fetching feeds...
   ok  Ollama релизы        4 items
   ok  vLLM релизы          4 items
   ok  ComfyUI релизы       4 items
-Итого: 324 материалов (свежих 324)
+Итого: 315 материалов (свежих 315)
 Перевод на русский...
-  перевод: 23 новых строк
-  перевод: готово 23/23
+  перевод: 46 новых строк
+  перевод: готово 46/46
 Сводка (русская)...
   pollinations: HTTPError: HTTP Error 400: Bad Request
   pollinations: HTTPError: HTTP Error 400: Bad Request
