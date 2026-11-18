@@ -11,44 +11,32 @@ Fetching feeds...
   ok  Simon Willison      15 items
   ok  Mistral AI          12 items
   ok  arXiv cs.AI         12 items
-  ERR r/LocalLLaMA       HTTPError: HTTP Error 404: Not Found
-  ok  Hacker News AI      15 items
+  ERR r/LocalLLaMA       HTTPError: HTTP Error 429: Too Many Requests
+  ERR Hacker News AI     HTTPError: HTTP Error 502: Bad Gateway
   ok  NVIDIA              12 items
   ok  Ars Technica AI     12 items
   ok  MarkTechPost        10 items
   ok  BAIR Berkeley        4 items
-  ok  Провод               2 items
+  ok  Провод               5 items
   ok  Мальцев просто      15 items
   ok  Нейросети           15 items
   ok  GPT News             6 items
   ok  Сиолошная           12 items
   ok  эйай ньюз           12 items
-  ok  Data Secrets        12 items
+  ok  Data Secrets        11 items
   ok  Denis Sexy IT       12 items
   ok  gonzo-обзоры ML      6 items
   ok  The Decoder         10 items
   ok  TLDR AI             10 items
-  ERR r/ClaudeAI         HTTPError: HTTP Error 404: Not Found
+  ERR r/ClaudeAI         HTTPError: HTTP Error 429: Too Many Requests
   ERR r/OpenAI           HTTPError: HTTP Error 429: Too Many Requests
   ok  Ollama релизы        4 items
   ok  vLLM релизы          4 items
   ok  ComfyUI релизы       4 items
-Итого: 311 материалов (свежих 311)
+Итого: 303 материалов (свежих 303)
 Перевод на русский...
-  перевод: 114 новых строк
-  перевод: HTTPError: HTTP Error 429: Too Many Requests
-  перевод: HTTPError: HTTP Error 429: Too Many Requests
-  перевод: HTTPError: HTTP Error 429: Too Many Requests
-  перевод: HTTPError: HTTP Error 429: Too Many Requests
-  перевод: HTTPError: HTTP Error 429: Too Many Requests
-  перевод: HTTPError: HTTP Error 429: Too Many Requests
-  перевод: HTTPError: HTTP Error 429: Too Many Requests
-  перевод: HTTPError: HTTP Error 429: Too Many Requests
-  перевод: HTTPError: HTTP Error 429: Too Many Requests
-  перевод: Google не отвечает, остальное переведётся в следующий запуск
-  перевод: 114 строк через запасную LLM
-  перевод: готово 75/114
+  перевод: 119 новых строк
+  перевод: готово 119/119
 Сводка (русская)...
-  pollinations: HTTPError: HTTP Error 404: Not Found
-  digest ok: бесплатная LLM · Pollinations (ru=0.91)
+  digest ok: бесплатная LLM · Pollinations (ru=0.83)
 Готово: /home/runner/work/ai-radar/ai-radar/index.html
