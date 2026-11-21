@@ -10,9 +10,9 @@ Fetching feeds...
   ok  MIT Tech Review     10 items
   ok  Simon Willison      15 items
   ok  Mistral AI          12 items
-  ok  arXiv cs.AI         12 items
+  ok  arXiv cs.AI          0 items
   ERR r/LocalLLaMA       HTTPError: HTTP Error 429: Too Many Requests
-  ok  Hacker News AI      15 items
+  ERR Hacker News AI     TimeoutError: The read operation timed out
   ok  NVIDIA              12 items
   ok  Ars Technica AI     12 items
   ok  MarkTechPost        10 items
@@ -20,7 +20,7 @@ Fetching feeds...
   ok  Провод               4 items
   ok  Мальцев просто      15 items
   ok  Нейросети           15 items
-  ok  GPT News            10 items
+  ok  GPT News             8 items
   ok  Сиолошная           12 items
   ok  эйай ньюз           12 items
   ok  Data Secrets        15 items
@@ -33,10 +33,23 @@ Fetching feeds...
   ok  Ollama релизы        4 items
   ok  vLLM релизы          4 items
   ok  ComfyUI релизы       4 items
-Итого: 324 материалов (свежих 324)
+Итого: 296 материалов (свежих 296)
 Перевод на русский...
-  перевод: 77 новых строк
-  перевод: готово 77/77
+  перевод: 21 новых строк
+  перевод: HTTPError: HTTP Error 429: Too Many Requests
+  перевод: HTTPError: HTTP Error 429: Too Many Requests
+  перевод: HTTPError: HTTP Error 429: Too Many Requests
+  перевод: HTTPError: HTTP Error 429: Too Many Requests
+  перевод: HTTPError: HTTP Error 429: Too Many Requests
+  перевод: HTTPError: HTTP Error 429: Too Many Requests
+  перевод: HTTPError: HTTP Error 429: Too Many Requests
+  перевод: HTTPError: HTTP Error 429: Too Many Requests
+  перевод: HTTPError: HTTP Error 429: Too Many Requests
+  перевод: Google не отвечает, остальное переведётся в следующий запуск
+  перевод: 21 строк через запасную LLM
+  перевод (LLM): HTTPError: HTTP Error 404: Not Found
+  перевод: готово 17/21
 Сводка (русская)...
-  digest ok: бесплатная LLM · Pollinations (ru=0.96)
+  pollinations: HTTPError: HTTP Error 404: Not Found
+  digest ok: бесплатная LLM · Pollinations (ru=0.91)
 Готово: /home/runner/work/ai-radar/ai-radar/index.html
