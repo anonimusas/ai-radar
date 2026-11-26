@@ -12,14 +12,14 @@ Fetching feeds...
   ok  Mistral AI          12 items
   ok  arXiv cs.AI         12 items
   ERR r/LocalLLaMA       HTTPError: HTTP Error 404: Not Found
-  ERR Hacker News AI     HTTPError: HTTP Error 502: Bad Gateway
+  ERR Hacker News AI     TimeoutError: The read operation timed out
   ok  NVIDIA              12 items
   ok  Ars Technica AI     12 items
   ok  MarkTechPost        10 items
   ok  BAIR Berkeley        4 items
-  ok  Провод               5 items
+  ok  Провод               2 items
   ok  Мальцев просто      15 items
-  ok  Нейросети           15 items
+  ok  Нейросети           14 items
   ok  GPT News             9 items
   ok  Сиолошная           12 items
   ok  эйай ньюз           12 items
@@ -33,10 +33,10 @@ Fetching feeds...
   ok  Ollama релизы        4 items
   ok  vLLM релизы          4 items
   ok  ComfyUI релизы       4 items
-Итого: 296 материалов (свежих 296)
+Итого: 289 материалов (свежих 289)
 Перевод на русский...
-  перевод: 22 новых строк
-  перевод: готово 22/22
+  перевод: 18 новых строк
+  перевод: готово 18/18
 Сводка (русская)...
-  digest ok: бесплатная LLM · Pollinations (ru=0.92)
+  digest ok: бесплатная LLM · Pollinations (ru=0.93)
 Готово: /home/runner/work/ai-radar/ai-radar/index.html
